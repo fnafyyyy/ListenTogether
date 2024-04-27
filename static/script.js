@@ -11,7 +11,7 @@
         const time = document.getElementById(`time`);
         const filesList = document.getElementById(`filesList`);
 
-        function changeAudio(index, timeStamp){
+        const changeAudio = (index, timestamp) => {
             if(audio){
                 stop();
                 reset();
@@ -19,34 +19,31 @@
             audio = new Audio('../'+filepath+'/'+filenames[index]);
             setTimeout(() => {
                 time.max = duration = audio.duration;
-                time.value = audio.currentTime = timeStamp;
+                time.value = audio.currentTime = timestamp;
             }, 100);
         }
         
-        function reset(){
+        const reset = () => {
             if(audio){
                 socket.emit('reset');
             }
         }
 
-        function stop(){
+        const stop = () => {
             if (audio) {
                 clearInterval(interval);
                 audio.pause();
             }
         }
 
-        // Funkcja do zmiany głośności
-        function changeVolume(event) {
-            var volume = event.target.value;
-            // Ustawiamy głośność odtwarzacza
+        const changeVolume = (event) => {
+            let volume = event.target.value;
             if (audio) {
                 audio.volume = volume;
             }
         }
 
-        // Funkcja do inicjowania odtwarzania muzyki
-        function playMusic() {
+        const playMusic = () => {
             if(!audio){
                 socket.emit('play_music');
             }
