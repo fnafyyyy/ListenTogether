@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listen Together</title> 
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/indexStyle.css">
+</head>
+<body>
+    <h1><img src="/static/logo.png" alt="Listen Together"></h1>
+    <form action="/uploads" method="post" enctype="multipart/form-data">
+        <!-- Przyciski i pola do przesyłania pliku -->
+        <label for="file" class="choose-file-label">Choose File</label>
+        <input type="file" id="file" name="files" accept="audio/*" onchange="updateFileName()" multiple required>
+        <span id="file-name"> {{ file_name }}  </span>
+        <button type="submit">Create room!</button>
+    </form>
+    
+    {% if rooms %}
+        {% for key, value in rooms.items() %}
+        <div>
+            <span>id: {{ key }}</span> <br />
+            <span>number of user: {{ value['members'] }}</span> <br />
+            <span>number of files: {{ value['files']|length }}</span> <br />
+            <button class='join' id = '{{ key }}'>Join Room!</button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    
+    <script>
+
+        const join_btns = document.querySelectorAll(`button.join`);
+
+        join_btns.forEach((btn) => {
+            btn.addEventListener(`click`,(e) => {
+            window.location.href = `/join/${e.target.id}`;
+        })
+        })
+
+        /* function joinRoom() {
+            window.location.href = '/join/73a3dfd8-4f71-4caa-8f9a-bdaeb79d226b';
+        } */
+        
+        function updateFileName() {
+            // Pobierz pole pliku i element span, który wyświetla nazwę pliku
+            const fileInput = document.getElementById('file');
+            const fileNameElement = document.getElementById('file-name');
+            
+            // Sprawdź, czy plik został wybrany
+            if (fileInput.files.length > 0) {
+                // Aktualizuj element span nazwą wybranego pliku
+                /* fileInput.files.forEach(file => {
+                    fileNameElement.textContent = file.name;
+                }); */
+                const files = fileInput.files;
+                fileNameElement.textContent = ``;
+                for (const key in files) {
+                    if(typeof files[key] === "object" ){
+                        fileNameElement.textContent += files[key].name+`\n`;
+                    }
+                }
+                //fileNameElement.textContent = fileInput.files[0].name;
+            }
+            /* else {
+                // Jeśli nie wybrano pliku, wyświetl domyślny tekst
+                fileNameElement.textContent = 'No file chosen';
+            } */
+        }
+    </script>
+</body>
+</html>

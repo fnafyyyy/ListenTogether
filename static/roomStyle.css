@@ -1,0 +1,43 @@
+body {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie elementów w poziomie */
+    align-items: center; /* Wyśrodkowanie elementów w pionie */
+    height: 100vh; /* Wysokość strony na pełen ekran */
+    margin: 0;
+    flex-direction: column;
+}
+
+button {
+    background-color: #4CAF50; /* Kolor przycisków */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Stylizacja kontrolki głośności */
+input[type="range"] {
+    width: 100%;
+    padding: 10px;
+    margin: 4px 0;
+    border-radius: 5px;
+}
+
+h1 a{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    color: white;
+    font-family: ubuntu;
+    text-decoration: none;
+    
+}
